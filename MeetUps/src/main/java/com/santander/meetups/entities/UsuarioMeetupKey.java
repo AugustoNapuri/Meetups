@@ -44,5 +44,9 @@ public class UsuarioMeetupKey implements Serializable{
     public void setMeetupId(Long meetupId) {
         this.meetupId = meetupId;
     }
-    
+
+    @Override
+    public String toString() {
+        return "UsuarioMeetupKey{" + "usuarioId=" + usuarioId + ", meetupId=" + meetupId + '}';
+    }
 }

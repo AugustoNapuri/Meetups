@@ -7,6 +7,8 @@ package com.santander.meetups.service;
 
 import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.Usuario;
+import com.santander.meetups.entities.UsuarioMeetupKey;
+import java.util.List;
 
 /**
  *
@@ -14,5 +16,8 @@ import com.santander.meetups.entities.Usuario;
  */
 public interface MeetupService {
     
-    Meetup crear(Usuario usuario, Meetup meetup);
+    Meetup crear(Usuario admin, Meetup meetup);
+    Meetup inscribir(Usuario usuario, Long meetupId);
+    void invitar(Usuario admin, List<Usuario> usuarios, Long meetupId);
+    void checkIn(UsuarioMeetupKey usuarioMeetupKey);
 }

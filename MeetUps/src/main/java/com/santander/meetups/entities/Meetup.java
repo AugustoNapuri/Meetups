@@ -8,7 +8,6 @@ package com.santander.meetups.entities;
 import com.santander.meetups.model.Clima;
 import com.santander.meetups.model.Cerveza;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -31,7 +30,7 @@ public class Meetup {
     private Long id;
     @OneToMany(mappedBy = "meetup",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<UsuarioMeetup> usuarioMeetup;
-    @OneToMany(mappedBy = "meetup", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "meetup", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Notificacion> notificaciones;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
@@ -56,12 +55,6 @@ public class Meetup {
         this.id = id;
     }
 
-    public void addUsuario(Usuario usuario) {
-        if (getUsuarioMeetup() == null) {
-            this.usuarioMeetup = new ArrayList<>();
-        }
-        getUsuarioMeetup().add(new UsuarioMeetup(usuario, this));
-    }
     public List<UsuarioMeetup> getUsuarioMeetup() {
         return usuarioMeetup;
     }

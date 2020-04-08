@@ -24,13 +24,22 @@ public class Notificacion implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario", insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", insertable=true, updatable=false)
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idMeetup", insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "meetup_id", insertable=true, updatable=false)
     private Meetup meetup;
     private String mensaje;
+
+    protected Notificacion() {
+    }
+    
+    public Notificacion(Usuario usuario, Meetup meetup, String mensaje) {
+        this.usuario = usuario;
+        this.meetup = meetup;
+        this.mensaje = mensaje;
+    }
 
     public Long getId() {
         return id;

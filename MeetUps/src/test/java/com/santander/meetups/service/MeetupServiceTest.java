@@ -7,15 +7,14 @@ package com.santander.meetups.service;
 
 import com.santander.meetups.MeetUpsApplicationTests;
 import com.santander.meetups.entities.Meetup;
+import com.santander.meetups.entities.TipoUsuario;
 import com.santander.meetups.entities.Usuario;
-import com.santander.meetups.repository.MeetupRepository;
-import com.santander.meetups.repository.UsuarioMeetupRepository;
-import com.santander.meetups.repository.UsuarioRepository;
+import com.santander.meetups.entities.UsuarioMeetupKey;
 import java.time.LocalDateTime;
+import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -23,26 +22,48 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class MeetupServiceTest extends MeetUpsApplicationTests{
     
-    @Autowired
-    private MeetupService meetupService;
-    @Autowired
-    private MeetupRepository meetupRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private UsuarioMeetupRepository usuarioMeetupRepository;
     @Test()
     public void crearMeetup_admin_ok() {
-        Usuario admin = new Usuario("augusto");
-        usuarioRepository.save(admin);
-        meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        assertEquals(1, meetupRepository.count());
-        assertEquals(1, usuarioMeetupRepository.count());
-        assertEquals(1, usuarioRepository.count());
+        Usuario admin = usuarioRepository.save(new Usuario("augusto", TipoUsuario.ADMIN));
+        Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+        assertEquals(1, meetup.getUsuarioMeetup().size());
     }
-//    @Test()
-//    public void crearMeetup_conInvitado_error() {
-//        Usuario invitado = new Usuario("invitado");
-//        meetupService.crear(invitado, new Meetup(LocalDateTime.MIN, LocalDateTime.MAX));
-//    }
+    @Test(expected = UnsupportedOperationException.class)
+    public void crearMeetup_conInvitado_error() {
+        Usuario invitado = new Usuario("invitado");
+        meetupService.crear(invitado, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+    }
+    
+    @Test
+    public void inscribirse_ok() {
+        Usuario usuario = usuarioRepository.save(new Usuario("usuario"));
+        Meetup meetup = meetupRepository.save(new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+        meetup = meetupService.inscribir(usuario, meetup.getId());
+        assertEquals(usuario.getId(), meetup.getUsuarioMeetup().get(0).getUsuario().getId());
+    }
+    
+    @Test
+    public void checkIn_ok() {
+        Usuario usuario = usuarioRepository.save(new Usuario("usuario"));
+        Meetup meetup = meetupRepository.save(new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+        meetup = meetupService.inscribir(usuario, meetup.getId());
+        
+        meetupService.checkIn(new UsuarioMeetupKey(usuario.getId(), meetup.getId()));
+        usuario = usuarioRepository.findById(usuario.getId()).get();
+        
+        assertNotNull(usuario.getUsuarioMeetup().get(0).getFechaCheckIn());
+    }
+    
+    @Test
+    public void invitar_ok() {
+        Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
+        Usuario invitado1 = usuarioRepository.save(new Usuario("invitado1"));
+        Usuario invitado2 = usuarioRepository.save(new Usuario("invitado2"));
+        Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+        meetupService.invitar(admin, List.of(invitado1, invitado2), meetup.getId());
+        meetup = meetupRepository.findById(meetup.getId()).get();
+        
+        assertEquals(3, meetup.getUsuarioMeetup().size());
+    }
+    
 }

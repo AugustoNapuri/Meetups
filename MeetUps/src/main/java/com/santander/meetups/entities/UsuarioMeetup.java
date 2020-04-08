@@ -24,13 +24,13 @@ public class UsuarioMeetup implements Serializable{
     
     @EmbeddedId
     private UsuarioMeetupKey id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
     @MapsId(value = "usuario_id")
     @JoinColumn(name = "usuario_id",  insertable=false, updatable=false)
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     @MapsId(value = "meetup_id")
-    @JoinColumn(name = "meetup_id")
+    @JoinColumn(name = "meetup_id",  insertable=false, updatable=false)
     private Meetup meetup;        
     private LocalDateTime fechaCheckIn;
 
