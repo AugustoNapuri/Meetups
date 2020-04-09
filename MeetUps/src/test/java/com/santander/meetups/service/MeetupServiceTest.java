@@ -10,6 +10,7 @@ import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.TipoUsuario;
 import com.santander.meetups.entities.Usuario;
 import com.santander.meetups.entities.UsuarioMeetupKey;
+import com.santander.meetups.exceptions.ClimaException;
 import java.time.LocalDateTime;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -38,7 +39,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
     public void inscribirse_ok() {
         Usuario usuario = usuarioRepository.save(new Usuario("usuario"));
         Meetup meetup = meetupRepository.save(new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetup = meetupService.inscribir(usuario, meetup.getId());
+        meetup = meetupService.inscribir(usuario, meetup);
         assertEquals(usuario.getId(), meetup.getUsuarioMeetup().get(0).getUsuario().getId());
     }
     
@@ -46,7 +47,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
     public void checkIn_ok() {
         Usuario usuario = usuarioRepository.save(new Usuario("usuario"));
         Meetup meetup = meetupRepository.save(new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetup = meetupService.inscribir(usuario, meetup.getId());
+        meetup = meetupService.inscribir(usuario, meetup);
         
         meetupService.checkIn(new UsuarioMeetupKey(usuario.getId(), meetup.getId()));
         usuario = usuarioRepository.findById(usuario.getId()).get();
@@ -60,10 +61,42 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         Usuario invitado1 = usuarioRepository.save(new Usuario("invitado1"));
         Usuario invitado2 = usuarioRepository.save(new Usuario("invitado2"));
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetupService.invitar(admin, List.of(invitado1, invitado2), meetup.getId());
+        meetupService.invitar(admin, List.of(invitado1, invitado2), meetup);
         meetup = meetupRepository.findById(meetup.getId()).get();
         
         assertEquals(3, meetup.getUsuarioMeetup().size());
+    }
+    
+    @Test
+    public void infoActualizada_siendoInvitado_vuelveClimaNoNulo() throws ClimaException {
+        Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
+        Usuario invitado = usuarioRepository.save(new Usuario("invitado"));
+        Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+        meetup = meetupService.infoActualizada(invitado, meetup);
+        
+        assertNotNull(meetup.getClima());
+        assertNotNull(meetup.getClima().getTemperaturaCelcius());
+        assertNull(meetup.getCerveza());
+    }
+    
+    @Test(expected = ClimaException.class)
+    public void infoActualizada_paraMeetupEn8Dias_error() throws ClimaException {
+        Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
+        Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now().plusDays(7), LocalDateTime.now().plusDays(8)));
+        meetupService.infoActualizada(admin, meetup);
+    }
+    
+    @Test
+    public void infoActualizada_siendoAdmin_devuelveClimayCerveza() throws ClimaException {
+        Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
+        Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+        meetup = meetupService.infoActualizada(admin, meetup);
+        
+        assertNotNull(meetup.getClima());
+        assertNotNull(meetup.getClima().getTemperaturaCelcius());
+        assertNotNull(meetup.getCerveza());
+        assertNotNull(meetup.getCerveza().getCervezas());
+        assertEquals(6, meetup.getCerveza().getCervezas().intValue());
     }
     
 }

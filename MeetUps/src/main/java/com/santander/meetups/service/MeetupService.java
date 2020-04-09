@@ -8,6 +8,7 @@ package com.santander.meetups.service;
 import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.Usuario;
 import com.santander.meetups.entities.UsuarioMeetupKey;
+import com.santander.meetups.exceptions.ClimaException;
 import java.util.List;
 
 /**
@@ -17,7 +18,8 @@ import java.util.List;
 public interface MeetupService {
     
     Meetup crear(Usuario admin, Meetup meetup);
-    Meetup inscribir(Usuario usuario, Long meetupId);
-    void invitar(Usuario admin, List<Usuario> usuarios, Long meetupId);
+    Meetup inscribir(Usuario usuario, Meetup meetup);
+    void invitar(Usuario admin, List<Usuario> usuarios, Meetup meetup);
     void checkIn(UsuarioMeetupKey usuarioMeetupKey);
+    Meetup infoActualizada(Usuario usuario, Meetup meetup) throws ClimaException;
 }

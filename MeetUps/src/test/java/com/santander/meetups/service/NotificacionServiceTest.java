@@ -30,7 +30,7 @@ public class NotificacionServiceTest extends MeetUpsApplicationTests {
         String mensaje = "Nueva notificacion para el evento";
 
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetupService.invitar(admin, List.of(invitado1, invitado2), meetup.getId());
+        meetupService.invitar(admin, List.of(invitado1, invitado2), meetup);
         notificacionService.notificarUsuarios(meetup.getId(), mensaje);
         meetup = meetupRepository.findById(meetup.getId()).get();
 
