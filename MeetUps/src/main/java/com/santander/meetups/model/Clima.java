@@ -10,10 +10,15 @@ package com.santander.meetups.model;
  * @author augus
  */
 public class Clima {
-    
+
     public final static Float KELVIN = 273.15F;
     private final Float temperaturaKelvin;
     private final Float temperaturaCelcius;
+
+    public Clima() {
+        this.temperaturaKelvin = 0F;
+        this.temperaturaCelcius = 0F;
+    }
 
     public Clima(Float temperaturaEnKelvin) {
         this.temperaturaKelvin = temperaturaEnKelvin;
@@ -27,5 +32,5 @@ public class Clima {
     public Float getTemperaturaCelcius() {
         return temperaturaCelcius;
     }
-      
+
 }

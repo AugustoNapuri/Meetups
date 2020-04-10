@@ -75,7 +75,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         meetup = meetupService.infoClima(meetup);
         
         assertNotNull(meetup.getClima());
-        assertNotNull(meetup.getClima().getTemperaturaCelcius());
+        assertTrue(meetup.getClima().getTemperaturaKelvin() > 0F);
     }
     
     @Test(expected = ClimaException.class)

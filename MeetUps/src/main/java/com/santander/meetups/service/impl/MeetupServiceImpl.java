@@ -9,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.TipoUsuario;
 import com.santander.meetups.entities.Usuario;
@@ -95,8 +96,9 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    @HystrixCommand(defaultFallback = "errorClima")
-    public Meetup infoClima(Meetup meetup) throws ClimaException{
+    @HystrixCommand(fallbackMethod = "errorClima", ignoreExceptions = {ClimaException.class}, commandProperties = {
+        @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")})
+    public Meetup infoClima(Meetup meetup) throws ClimaException {
         if (LocalDateTime.now().plusDays(CANTIDAD_DIAS_CLIMA - 1).isBefore(meetup.getFechaInicio())) {
             throw new ClimaException("No se puede obtener con precision el clima para esa fecha");
         }
@@ -132,11 +134,12 @@ public class MeetupServiceImpl implements MeetupService {
         }
         return meetup;
     }
-    
-    public Meetup errorClima(Usuario usuario, Meetup meetup) throws ClimaException {
-        throw new ClimaException("No se pudo obtener el clima, intentelo mas tarde.");
+
+    public Meetup errorClima(Meetup meetup) throws ClimaException {
+        meetup.setClima(new Clima());
+        return meetup;
     }
-    
+
     @Override
     public Meetup infoCervezas(Meetup meetup) {
         try {
