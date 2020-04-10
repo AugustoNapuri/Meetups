@@ -29,6 +29,10 @@ public class Cerveza {
     public static Cerveza builder(Meetup meetup) {
         return new Cerveza(calcularCantidadCervezas(meetup));
     }
+    
+    public static Cerveza defaultBuilder(Meetup meetup) {
+        return new Cerveza(meetup.getUsuarioMeetup().size() * 2);
+    }
 
     public static Integer calcularCantidadCervezas(Meetup meetup) {
         if (meetup.getClima().getTemperaturaCelcius() < 20F) {

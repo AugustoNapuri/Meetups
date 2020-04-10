@@ -21,5 +21,6 @@ public interface MeetupService {
     Meetup inscribir(Usuario usuario, Meetup meetup);
     void invitar(Usuario admin, List<Usuario> usuarios, Meetup meetup);
     void checkIn(UsuarioMeetupKey usuarioMeetupKey);
-    Meetup infoActualizada(Usuario usuario, Meetup meetup) throws ClimaException;
+    Meetup infoClima(Meetup meetup) throws ClimaException;
+    Meetup infoCervezas(Meetup meetup);
 }

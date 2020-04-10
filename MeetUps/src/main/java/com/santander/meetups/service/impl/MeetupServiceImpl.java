@@ -8,6 +8,7 @@ package com.santander.meetups.service.impl;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.TipoUsuario;
 import com.santander.meetups.entities.Usuario;
@@ -23,6 +24,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -92,7 +95,8 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Meetup infoActualizada(Usuario usuario, Meetup meetup) throws ClimaException{
+    @HystrixCommand(defaultFallback = "errorClima")
+    public Meetup infoClima(Meetup meetup) throws ClimaException{
         if (LocalDateTime.now().plusDays(CANTIDAD_DIAS_CLIMA - 1).isBefore(meetup.getFechaInicio())) {
             throw new ClimaException("No se puede obtener con precision el clima para esa fecha");
         }
@@ -126,8 +130,20 @@ public class MeetupServiceImpl implements MeetupService {
                 meetup.setClima(clima);
             }
         }
-        if (usuario.getTipoUsuario().equals(TipoUsuario.ADMIN)) {
+        return meetup;
+    }
+    
+    public Meetup errorClima(Usuario usuario, Meetup meetup) throws ClimaException {
+        throw new ClimaException("No se pudo obtener el clima, intentelo mas tarde.");
+    }
+    
+    @Override
+    public Meetup infoCervezas(Meetup meetup) {
+        try {
+            meetup = infoClima(meetup);
             meetup.setCerveza(Cerveza.builder(meetup));
+        } catch (ClimaException ex) {
+            meetup.setCerveza(Cerveza.defaultBuilder(meetup));
         }
         return meetup;
     }

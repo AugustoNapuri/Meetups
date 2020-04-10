@@ -72,31 +72,27 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
         Usuario invitado = usuarioRepository.save(new Usuario("invitado"));
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetup = meetupService.infoActualizada(invitado, meetup);
+        meetup = meetupService.infoClima(meetup);
         
         assertNotNull(meetup.getClima());
         assertNotNull(meetup.getClima().getTemperaturaCelcius());
-        assertNull(meetup.getCerveza());
     }
     
     @Test(expected = ClimaException.class)
     public void infoActualizada_paraMeetupEn8Dias_error() throws ClimaException {
         Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now().plusDays(7), LocalDateTime.now().plusDays(8)));
-        meetupService.infoActualizada(admin, meetup);
+        meetupService.infoClima(meetup);
     }
     
     @Test
-    public void infoActualizada_siendoAdmin_devuelveClimayCerveza() throws ClimaException {
+    public void infoCervezas_siendoAdmin_devuelveCervezas() throws ClimaException {
         Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetup = meetupService.infoActualizada(admin, meetup);
+        meetup = meetupService.infoCervezas(meetup);
         
-        assertNotNull(meetup.getClima());
-        assertNotNull(meetup.getClima().getTemperaturaCelcius());
         assertNotNull(meetup.getCerveza());
         assertNotNull(meetup.getCerveza().getCervezas());
-        assertEquals(6, meetup.getCerveza().getCervezas().intValue());
     }
     
 }
