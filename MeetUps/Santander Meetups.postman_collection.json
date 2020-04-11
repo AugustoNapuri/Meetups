@@ -1,0 +1,567 @@
+{
+	"info": {
+		"_postman_id": "2b4152d5-87af-42fb-a237-f7c3768c3419",
+		"name": "Santander Meetups",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Crear usuario ADMIN",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"augusto\",\r\n  \"tipoUsuario\": \"ADMIN\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario INVITADO",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 1,\r\n  \"nombre\": \"invitado2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Usuarios",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notificacion",
+			"item": [
+				{
+					"name": "Get Notificaciones",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 1,\r\n  \"meetup\": {\r\n    \"id\": 1\r\n  },\r\n  \"usuario\": {\r\n        \"id\": 1\r\n    },\r\n  \"mensaje\": \"Nuevo mensaje2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/notificacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"notificacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notificar Usuarios",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "El evento va a ser en la terraza"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/notificacion?meetupId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"notificacion"
+							],
+							"query": [
+								{
+									"key": "meetupId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meetup",
+			"item": [
+				{
+					"name": "Detalles",
+					"item": [
+						{
+							"name": "Info Clima",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "pass",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/meetup/1/clima",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"meetup",
+										"1",
+										"clima"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Info Cervezas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/meetup/1/clima?userId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"meetup",
+										"1",
+										"clima"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Meetup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/meetup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Meetup",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fechaFin\": \"2020-04-11T03:35:01.603Z\",\r\n  \"fechaInicio\": \"2020-04-11T03:35:01.604Z\"\r\n  \r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/meetup?user=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetup"
+							],
+							"query": [
+								{
+									"key": "user",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inscribirse",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/meetup/join/1?userId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetup",
+								"join",
+								"1"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invitar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    1,\n    2,\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10,\n    11\n    \n]"
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/meetup/invitar/{{meetupId}}?userId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetup",
+								"invitar",
+								"{{meetupId}}"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check In",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/meetup/checkin/1?userId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"meetup",
+								"checkin",
+								"1"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
