@@ -25,10 +25,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -61,7 +60,7 @@ public class MeetupServiceImpl implements MeetupService {
     @Override
     public Meetup crear(Usuario admin, Meetup meetup) {
         if (admin.getTipoUsuario().equals(TipoUsuario.INVITADO)) {
-            throw new UnsupportedOperationException("agregar spring security");
+            throw new SecurityException("No tienes permitido crear Meetups");
         }
         meetup = repository.save(meetup);
         return inscribir(admin, meetup);
@@ -69,12 +68,11 @@ public class MeetupServiceImpl implements MeetupService {
 
     @Override
     public Meetup inscribir(Usuario usuario, Meetup meetup) {
-        return repository.findById(
+        return repository.getOne(
                 usuarioMeetupRepository
                         .save(new UsuarioMeetup(usuario, meetup))
                         .getMeetup()
-                        .getId())
-                .get();
+                        .getId());
     }
 
     @Override
@@ -86,13 +84,34 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public void invitar(Usuario admin, List<Usuario> usuarios, Meetup meetup) {
+    @Transactional
+    public void invitar(Usuario admin, List<Long> usuariosId, Meetup meetup) {
         if (admin.getTipoUsuario().equals(TipoUsuario.INVITADO)) {
-            throw new UnsupportedOperationException("agregar spring security");
+            throw new SecurityException("No tienes permitido invitar usuarios");
         }
-        usuarios.forEach((usuario) -> {
-            inscribir(usuario, meetup);
+
+        usuariosId.forEach((usuarioId) -> {
+            inscribir(new Usuario(usuarioId), meetup);
         });
+    }
+
+    @Override
+    public Meetup infoCervezas(Meetup meetup, Usuario usuario) {
+        if (!usuario.getTipoUsuario().equals(TipoUsuario.ADMIN)) {
+            throw new SecurityException("No puede acceder a este recurso");
+        }
+        try {
+            meetup = infoClima(meetup);
+            meetup.setCerveza(Cerveza.builder(meetup));
+        } catch (ClimaException ex) {
+            meetup.setCerveza(Cerveza.defaultBuilder(meetup));
+        }
+        return meetup;
+    }
+
+    @Override
+    public List<Meetup> getAll() {
+        return repository.findAll();
     }
 
     @Override
@@ -136,19 +155,6 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     public Meetup errorClima(Meetup meetup) throws ClimaException {
-        meetup.setClima(new Clima());
-        return meetup;
+        throw new ClimaException("El servicio no esta available");
     }
-
-    @Override
-    public Meetup infoCervezas(Meetup meetup) {
-        try {
-            meetup = infoClima(meetup);
-            meetup.setCerveza(Cerveza.builder(meetup));
-        } catch (ClimaException ex) {
-            meetup.setCerveza(Cerveza.defaultBuilder(meetup));
-        }
-        return meetup;
-    }
-
 }

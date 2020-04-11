@@ -17,10 +17,11 @@ import java.util.List;
  */
 public interface MeetupService {
     
+    List<Meetup> getAll();
     Meetup crear(Usuario admin, Meetup meetup);
     Meetup inscribir(Usuario usuario, Meetup meetup);
-    void invitar(Usuario admin, List<Usuario> usuarios, Meetup meetup);
+    void invitar(Usuario admin, List<Long> usuariosId, Meetup meetup);
     void checkIn(UsuarioMeetupKey usuarioMeetupKey);
     Meetup infoClima(Meetup meetup) throws ClimaException;
-    Meetup infoCervezas(Meetup meetup);
+    Meetup infoCervezas(Meetup meetup, Usuario usuario);
 }

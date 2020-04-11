@@ -5,7 +5,11 @@
  */
 package com.santander.meetups.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,13 +28,16 @@ public class Notificacion implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "usuario_id", insertable=true, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", updatable=false)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "meetup_id", insertable=true, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meetup_id", updatable=false)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private Meetup meetup;
     private String mensaje;
+    private LocalDateTime fechaLeido;
 
     protected Notificacion() {
     }
@@ -73,5 +80,11 @@ public class Notificacion implements Serializable{
         this.mensaje = mensaje;
     }
 
-    
+    public LocalDateTime getFechaLeido() {
+        return fechaLeido;
+    }
+
+    public void setFechaLeido(LocalDateTime fechaLeido) {
+        this.fechaLeido = fechaLeido;
+    }
 }

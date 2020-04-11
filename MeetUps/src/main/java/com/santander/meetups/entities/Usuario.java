@@ -5,6 +5,7 @@
  */
 package com.santander.meetups.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,15 +25,22 @@ public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     private final String nombre;
     @Enumerated(EnumType.STRING)
     private final TipoUsuario tipoUsuario;
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Notificacion> notificaciones;
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<UsuarioMeetup> usuarioMeetup;
 
+    public Usuario(Long id) {
+        this.id = id;
+        this.nombre = "";
+        this.tipoUsuario = TipoUsuario.INVITADO;
+    }
+    
     protected Usuario() {
         this.nombre = "";
         this.tipoUsuario = TipoUsuario.INVITADO;

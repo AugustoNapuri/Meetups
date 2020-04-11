@@ -5,10 +5,12 @@
  */
 package com.santander.meetups.service.impl;
 
+import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.Notificacion;
 import com.santander.meetups.repository.MeetupRepository;
 import com.santander.meetups.repository.NotificacionRepository;
 import com.santander.meetups.service.NotificacionService;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ public class NotificacionServiceImpl implements NotificacionService {
     @Override
     public void notificarUsuarios(Long meetupId, String mensaje) {
         repository.saveAll(
-                meetupRepository.findById(meetupId).get()
+                meetupRepository.getOne(meetupId)
                         .getUsuarioMeetup()
                         .stream()
                         .map((um) -> {
@@ -38,4 +40,8 @@ public class NotificacionServiceImpl implements NotificacionService {
         );
     }
 
+    @Override
+    public List<Notificacion> getAll() {
+        return repository.findAll();
+    }
 }

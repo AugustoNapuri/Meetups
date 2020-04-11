@@ -29,7 +29,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
         assertEquals(1, meetup.getUsuarioMeetup().size());
     }
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = SecurityException.class)
     public void crearMeetup_conInvitado_error() {
         Usuario invitado = new Usuario("invitado");
         meetupService.crear(invitado, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
@@ -50,7 +50,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         meetup = meetupService.inscribir(usuario, meetup);
         
         meetupService.checkIn(new UsuarioMeetupKey(usuario.getId(), meetup.getId()));
-        usuario = usuarioRepository.findById(usuario.getId()).get();
+        usuario = usuarioRepository.getOne(usuario.getId());
         
         assertNotNull(usuario.getUsuarioMeetup().get(0).getFechaCheckIn());
     }
@@ -61,7 +61,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         Usuario invitado1 = usuarioRepository.save(new Usuario("invitado1"));
         Usuario invitado2 = usuarioRepository.save(new Usuario("invitado2"));
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetupService.invitar(admin, List.of(invitado1, invitado2), meetup);
+        meetupService.invitar(admin, List.of(invitado1.getId(), invitado2.getId()), meetup);
         meetup = meetupRepository.findById(meetup.getId()).get();
         
         assertEquals(3, meetup.getUsuarioMeetup().size());
@@ -89,7 +89,7 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
     public void infoCervezas_siendoAdmin_devuelveCervezas() throws ClimaException {
         Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetup = meetupService.infoCervezas(meetup);
+        meetup = meetupService.infoCervezas(meetup, admin);
         
         assertNotNull(meetup.getCerveza());
         assertNotNull(meetup.getCerveza().getCervezas());

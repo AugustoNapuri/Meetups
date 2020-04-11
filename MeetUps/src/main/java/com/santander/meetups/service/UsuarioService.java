@@ -5,15 +5,17 @@
  */
 package com.santander.meetups.service;
 
-import com.santander.meetups.entities.Notificacion;
+import com.santander.meetups.entities.Usuario;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author augus
  */
-public interface NotificacionService {
+@Repository
+public interface UsuarioService {
     
-    void notificarUsuarios(Long meetupId, String mensaje);
-    List<Notificacion> getAll();
+    Usuario crear(Usuario usuario);
+    List<Usuario> getAll();
 }

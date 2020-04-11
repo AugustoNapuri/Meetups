@@ -5,6 +5,7 @@
  */
 package com.santander.meetups.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.santander.meetups.model.Clima;
 import com.santander.meetups.model.Cerveza;
 import java.time.LocalDateTime;
@@ -27,10 +28,11 @@ public class Meetup {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-    @OneToMany(mappedBy = "meetup",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "meetup",fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<UsuarioMeetup> usuarioMeetup;
-    @OneToMany(mappedBy = "meetup", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "meetup", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Notificacion> notificaciones;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
@@ -101,11 +103,6 @@ public class Meetup {
 
     public void setCerveza(Cerveza cerveza) {
         this.cerveza = cerveza;
-    }
-
-    @Override
-    public String toString() {
-        return "Meetup{" + "id=" + id + ", usuarioMeetup=" + usuarioMeetup + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", clima=" + clima + ", cerveza=" + cerveza + '}';
     }
 
 }

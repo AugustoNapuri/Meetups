@@ -5,6 +5,7 @@
  */
 package com.santander.meetups.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
@@ -24,13 +25,15 @@ public class UsuarioMeetup implements Serializable{
     
     @EmbeddedId
     private UsuarioMeetupKey id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {})
     @MapsId(value = "usuario_id")
-    @JoinColumn(name = "usuario_id",  insertable=false, updatable=false)
+    @JoinColumn(name = "usuario_id", updatable=false)
+    @JsonIgnore
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @MapsId(value = "meetup_id")
-    @JoinColumn(name = "meetup_id",  insertable=false, updatable=false)
+    @JoinColumn(name = "meetup_id", updatable=false)
+    @JsonIgnore
     private Meetup meetup;        
     private LocalDateTime fechaCheckIn;
 
