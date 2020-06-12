@@ -43,26 +43,28 @@ public class MeetupRestController {
     @Autowired
     private MeetupRepository repository;
 
+    //For testing purposes
     @GetMapping
     public List<Meetup> getAll() {
         return service.getAll();
     }
 
+    //Returns the Meetup filled with the weather of the event day
     @GetMapping(path = "/{id}/clima")
     public ResponseEntity infoClima(
             @PathVariable Long id) {
         Optional<Meetup> meetup = repository.findById(id);
-        if (meetup.isPresent()) {
-            try {
-                return new ResponseEntity(service.infoClima(repository.getOne(id)), HttpStatus.OK);
-            } catch (ClimaException e) {
-                return new ResponseEntity(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
-            }
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (!meetup.isPresent()) {
+            return new ResponseEntity("Meetup not found", HttpStatus.NOT_FOUND);
+        }
+        try {
+            return new ResponseEntity(service.infoClima(repository.getOne(id)), HttpStatus.OK);
+        } catch (ClimaException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
         }
     }
 
+    //Fills the meetup with the details of the Cerveza neeeded.
     @GetMapping(path = "/{id}/cervezas")
     public ResponseEntity infoCervezas(
             @PathVariable Long id,
@@ -70,15 +72,17 @@ public class MeetupRestController {
 
         Optional<Meetup> meetup = repository.findById(id);
         Optional<Usuario> usuario = usuarioRepository.findById(userId);
-        if (meetup.isPresent() && usuario.isPresent()) {
-            return new ResponseEntity(service.infoCervezas(meetup.get(), usuario.get()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (!meetup.isPresent()) {
+            return new ResponseEntity("Meetup not found", HttpStatus.NOT_FOUND);
         }
+        if (!usuario.isPresent()) {
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(service.infoCervezas(meetup.get(), usuario.get()), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Meetup> crear(
+    public ResponseEntity<Meetup> create(
             @RequestParam(name = "user") Long admin,
             @RequestBody Meetup meetup) {
         try {
@@ -88,52 +92,59 @@ public class MeetupRestController {
         }
     }
 
-    @PutMapping(path = "/invitar/{id}")
-    public ResponseEntity invitar(
-            @RequestBody List<Long> usuariosId,
-            @PathVariable(name = "id") Long meetupId,
-            @RequestParam(name = "userId") Long userId) {
-
-        Optional<Meetup> meetup = repository.findById(meetupId);
-        Optional<Usuario> usuario = usuarioRepository.findById(userId);
-        if (meetup.isPresent() && usuario.isPresent()) {
-            try {
-                service.invitar(usuario.get(), usuariosId, meetup.get());
-                return new ResponseEntity(HttpStatus.OK);
-            } catch (UnsupportedOperationException uoe) {
-                return new ResponseEntity(uoe.getMessage(), HttpStatus.FORBIDDEN);
-            }
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PutMapping(path = "/join/{id}")
-    public ResponseEntity inscribir(
-            @PathVariable(name = "id") Long meetupId,
-            @RequestParam(name = "userId") Long userId) {
-
-        Optional<Usuario> usuario = usuarioRepository.findById(userId);
-        Optional<Meetup> meetup = repository.findById(meetupId);
-        if (usuario.isPresent() && meetup.isPresent()) {
-            return new ResponseEntity(service.inscribir(usuario.get(), meetup.get()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PutMapping(path = "/checkin/{id}")
+    @PutMapping(path = "/{id}/checkin")
     public ResponseEntity checkIn(
             @PathVariable(name = "id") Long meetupId,
             @RequestParam(name = "userId") Long userId) {
 
         Optional<Usuario> usuario = usuarioRepository.findById(userId);
         Optional<Meetup> meetup = repository.findById(meetupId);
-        if (usuario.isPresent() && meetup.isPresent()) {
-            service.checkIn(new UsuarioMeetupKey(userId, meetupId));
+        if (!meetup.isPresent()) {
+            return new ResponseEntity("Meetup not found", HttpStatus.NOT_FOUND);
+        }
+        if (!usuario.isPresent()) {
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+        }
+        service.checkIn(new UsuarioMeetupKey(userId, meetupId));
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/{id}/admin/{userId}/users")
+    public ResponseEntity invite(
+            @RequestBody List<Long> usuariosId,
+            @PathVariable(name = "id") Long meetupId,
+            @PathVariable(name = "userId") Long userId) {
+
+        Optional<Meetup> meetup = repository.findById(meetupId);
+        Optional<Usuario> usuario = usuarioRepository.findById(userId);
+        if (!meetup.isPresent()) {
+            return new ResponseEntity("Meetup not found", HttpStatus.NOT_FOUND);
+        }
+        if (!usuario.isPresent()) {
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.invitar(usuario.get(), usuariosId, meetup.get());
             return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (UnsupportedOperationException uoe) {
+            return new ResponseEntity(uoe.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
+
+    @PutMapping(path = "/{id}/users")
+    public ResponseEntity signOn(
+            @PathVariable(name = "id") Long meetupId,
+            @RequestParam(name = "userId") Long userId) {
+
+        Optional<Usuario> usuario = usuarioRepository.findById(userId);
+        Optional<Meetup> meetup = repository.findById(meetupId);
+        if (!meetup.isPresent()) {
+            return new ResponseEntity("Meetup not found", HttpStatus.NOT_FOUND);
+        }
+        if (!usuario.isPresent()) {
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(service.inscribir(usuario.get(), meetup.get()), HttpStatus.OK);
+    }
+
 }

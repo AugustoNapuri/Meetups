@@ -5,7 +5,6 @@
  */
 package com.santander.meetups.service.impl;
 
-import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.Notificacion;
 import com.santander.meetups.repository.MeetupRepository;
 import com.santander.meetups.repository.NotificacionRepository;

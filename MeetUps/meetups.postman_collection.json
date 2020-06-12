@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2b4152d5-87af-42fb-a237-f7c3768c3419",
+		"_postman_id": "0a657493-6486-4f37-bd08-ee3dbc3dd94c",
 		"name": "Santander Meetups",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -120,10 +120,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "http://localhost:8081/api/usuario",
 							"protocol": "http",
@@ -139,7 +135,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Notificacion",
@@ -238,7 +235,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Meetup",
@@ -266,10 +264,6 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
 									"raw": "http://localhost:8081/api/meetup/1/clima",
 									"protocol": "http",
@@ -292,10 +286,6 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
 								"url": {
 									"raw": "http://localhost:8081/api/meetup/1/clima?userId=1",
 									"protocol": "http",
@@ -320,6 +310,7 @@
 							"response": []
 						}
 					],
+					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				},
 				{
@@ -342,10 +333,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "http://localhost:8081/api/meetup",
 							"protocol": "http",
@@ -435,10 +422,13 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup/join/1?userId=2",
+							"raw": "http://localhost:8081/api/meetup/1/users?userId=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -447,8 +437,8 @@
 							"path": [
 								"api",
 								"meetup",
-								"join",
-								"1"
+								"1",
+								"users"
 							],
 							"query": [
 								{
@@ -492,7 +482,7 @@
 							"raw": "[\n    1,\n    2,\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10,\n    11\n    \n]"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup/invitar/{{meetupId}}?userId=1",
+							"raw": "http://localhost:8081/api/meetup/{{meetupId}}/users?userId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -501,8 +491,8 @@
 							"path": [
 								"api",
 								"meetup",
-								"invitar",
-								"{{meetupId}}"
+								"{{meetupId}}",
+								"users"
 							],
 							"query": [
 								{
@@ -536,10 +526,13 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup/checkin/1?userId=1",
+							"raw": "http://localhost:8081/api/meetup/1/checkin?userId=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -548,8 +541,8 @@
 							"path": [
 								"api",
 								"meetup",
-								"checkin",
-								"1"
+								"1",
+								"checkin"
 							],
 							"query": [
 								{
@@ -561,7 +554,9 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
