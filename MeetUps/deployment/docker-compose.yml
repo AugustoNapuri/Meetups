@@ -1,0 +1,23 @@
+version: "2"
+services:
+ db:
+  container_name: mysql_db
+  image: mysql:latest
+  ports:
+   - "3306:3306"
+  volumes:
+   - /usr/local/mysql:/var/lib/mysql
+  environment:
+   MYSQL_USER: "admin"
+   MYSQL_PASSWORD: "admin"
+   MYSQL_ROOT_PASSWORD: "admin"
+   MYSQL_DATABASE: "Meetups"
+
+ meetups:
+  container_name: meetups_java
+  image: augustonapuri/meetups:latest
+  restart: always
+  ports: 
+   - 8080:8081
+  links:
+   - db
