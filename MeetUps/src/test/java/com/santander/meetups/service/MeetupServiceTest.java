@@ -12,6 +12,7 @@ import com.santander.meetups.entities.Usuario;
 import com.santander.meetups.entities.UsuarioMeetupKey;
 import com.santander.meetups.exceptions.ClimaException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -60,8 +61,12 @@ public class MeetupServiceTest extends MeetUpsApplicationTests{
         Usuario admin = usuarioRepository.save(new Usuario("admin", TipoUsuario.ADMIN));
         Usuario invitado1 = usuarioRepository.save(new Usuario("invitado1"));
         Usuario invitado2 = usuarioRepository.save(new Usuario("invitado2"));
+        List<Long> ids = new ArrayList();
+        ids.add(invitado1.getId());
+        ids.add(invitado2.getId());
+        
         Meetup meetup = meetupService.crear(admin, new Meetup(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
-        meetupService.invitar(admin, List.of(invitado1.getId(), invitado2.getId()), meetup);
+        meetupService.invitar(admin, ids, meetup);
         meetup = meetupRepository.findById(meetup.getId()).get();
         
         assertEquals(3, meetup.getUsuarioMeetup().size());
