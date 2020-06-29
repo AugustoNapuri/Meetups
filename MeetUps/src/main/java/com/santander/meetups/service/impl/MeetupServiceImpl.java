@@ -84,14 +84,15 @@ public class MeetupServiceImpl implements MeetupService {
 
     @Override
     @Transactional
-    public void invitar(Usuario admin, List<Long> usuariosId, Meetup meetup) {
+    public Meetup invitar(Usuario admin, List<Long> usuariosId, Meetup meetup) {
         if (admin.getTipoUsuario().equals(TipoUsuario.INVITADO)) {
             throw new SecurityException("No tienes permitido invitar usuarios");
         }
 
-        usuariosId.forEach((usuarioId) -> {
-            inscribir(new Usuario(usuarioId), meetup);
-        });
+        return usuariosId.stream()
+                .map(m -> inscribir(new Usuario(m), meetup))
+                .reduce((first, second) -> second)
+                .get();
     }
 
     @Override

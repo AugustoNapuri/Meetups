@@ -7,13 +7,11 @@ package com.santander.meetups.service;
 
 import com.santander.meetups.entities.Usuario;
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author augus
  */
-@Repository
 public interface UsuarioService {
     
     Usuario crear(Usuario usuario);

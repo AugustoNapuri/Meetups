@@ -5,6 +5,7 @@
  */
 package com.santander.meetups.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.santander.meetups.model.Clima;
 import com.santander.meetups.model.Cerveza;
@@ -24,6 +25,7 @@ import javax.persistence.Transient;
  * @author augus
  */
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class Meetup {
     
     @Id

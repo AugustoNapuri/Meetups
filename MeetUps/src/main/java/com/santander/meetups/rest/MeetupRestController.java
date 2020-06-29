@@ -124,8 +124,7 @@ public class MeetupRestController {
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
         try {
-            service.invitar(usuario.get(), usuariosId, meetup.get());
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(service.invitar(usuario.get(), usuariosId, meetup.get()), HttpStatus.OK);
         } catch (UnsupportedOperationException uoe) {
             return new ResponseEntity(uoe.getMessage(), HttpStatus.FORBIDDEN);
         }

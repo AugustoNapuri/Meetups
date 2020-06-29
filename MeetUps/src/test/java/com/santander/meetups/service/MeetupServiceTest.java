@@ -5,7 +5,7 @@
  */
 package com.santander.meetups.service;
 
-import com.santander.meetups.MeetUpsApplicationTests;
+import com.santander.meetups.MeetUpsApplicationComponents;
 import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.TipoUsuario;
 import com.santander.meetups.entities.Usuario;
@@ -22,7 +22,7 @@ import org.junit.Test;
  *
  * @author augus
  */
-public class MeetupServiceTest extends MeetUpsApplicationTests{
+public class MeetupServiceTest extends MeetUpsApplicationComponents{
     
     @Test()
     public void crearMeetup_admin_ok() {

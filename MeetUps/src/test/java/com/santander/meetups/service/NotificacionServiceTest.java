@@ -5,7 +5,7 @@
  */
 package com.santander.meetups.service;
 
-import com.santander.meetups.MeetUpsApplicationTests;
+import com.santander.meetups.MeetUpsApplicationComponents;
 import com.santander.meetups.entities.Meetup;
 import com.santander.meetups.entities.TipoUsuario;
 import com.santander.meetups.entities.Usuario;
@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author augus
  */
-public class NotificacionServiceTest extends MeetUpsApplicationTests {
+public class NotificacionServiceTest extends MeetUpsApplicationComponents {
 
     @Test
     public void notificarUsuarios_3usuarios_ok() {
