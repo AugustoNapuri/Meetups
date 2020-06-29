@@ -24,7 +24,7 @@ import javax.persistence.Transient;
  *
  * @author augus
  */
-@Entity
+@Entity(name = "MEETUP")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class Meetup {
     
