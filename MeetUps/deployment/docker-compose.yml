@@ -6,7 +6,7 @@ services:
   ports:
    - "3306:3306"
   volumes:
-   - /usr/local/mysql:/var/lib/mysql
+   - ./:/docker-entrypoint-initdb.d
   environment:
    MYSQL_USER: "admin"
    MYSQL_PASSWORD: "admin"
