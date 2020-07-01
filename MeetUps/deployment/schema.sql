@@ -7,35 +7,35 @@
  * Author:  augus
  * Created: 20/02/2019
  */
-DROP TABLE IF EXISTS Notificacion;
-DROP TABLE IF EXISTS UsuarioMeetup;
-DROP TABLE IF EXISTS Meetup;
-DROP TABLE IF EXISTS Usuario;
+DROP TABLE IF EXISTS notificacion;
+DROP TABLE IF EXISTS usuario_meetup;
+DROP TABLE IF EXISTS meetup;
+DROP TABLE IF EXISTS usuario;
 
-CREATE TABLE Usuario (
+CREATE TABLE usuario (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    tipoUsuario VARCHAR(30) NOT NULL
+    tipo_usuario VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE Meetup (
+CREATE TABLE meetup (
     id SERIAL PRIMARY KEY,
-    fechaInicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    fechaFin TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    fecha_fin TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE Notificacion (
+CREATE TABLE notificacion (
     id SERIAL PRIMARY KEY,
-    usuarioId INTEGER NOT NULL,
-    meetupId INTEGER NOT NULL,
+    usuario_id INTEGER NOT NULL,
+    meetup_id INTEGER NOT NULL,
     mensaje VARCHAR(300) NOT NULL,
-    fechaLeido TIMESTAMP DEFAULT NULL
+    fecha_leido TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE UsuarioMeetup (
-    usuarioId INTEGER NOT NULL,
-    meetupId INTEGER NOT NULL,
-    fechaCheckIn TIMESTAMP DEFAULT NULL,
-    PRIMARY KEY (usuarioId, meetupId)
+CREATE TABLE usuario_meetup (
+    usuario_id INTEGER NOT NULL,
+    meetup_id INTEGER NOT NULL,
+    fecha_check_in TIMESTAMP DEFAULT NULL,
+    PRIMARY KEY (usuario_id, meetup_id)
 );
 
