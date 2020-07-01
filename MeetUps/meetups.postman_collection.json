@@ -40,12 +40,11 @@
 							"raw": "{\r\n  \"nombre\": \"augusto\",\r\n  \"tipoUsuario\": \"ADMIN\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/usuario",
+							"raw": "http://{{domain}}/api/usuario",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"usuario"
@@ -86,12 +85,11 @@
 							"raw": "{\r\n\t\"id\": 1,\r\n  \"nombre\": \"invitado2\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/usuario",
+							"raw": "http://{{domain}}/api/usuario",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"usuario"
@@ -121,12 +119,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/usuario",
+							"raw": "http://{{domain}}/api/usuario",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"usuario"
@@ -176,12 +173,11 @@
 							"raw": "{\r\n\t\"id\": 1,\r\n  \"meetup\": {\r\n    \"id\": 1\r\n  },\r\n  \"usuario\": {\r\n        \"id\": 1\r\n    },\r\n  \"mensaje\": \"Nuevo mensaje2\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/notificacion",
+							"raw": "http://{{domain}}/api/notificacion",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"notificacion"
@@ -215,12 +211,11 @@
 							"raw": "El evento va a ser en la terraza"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/notificacion?meetupId=2",
+							"raw": "http://{{domain}}/api/notificacion?meetupId={{meetupId}}",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"notificacion"
@@ -228,7 +223,7 @@
 							"query": [
 								{
 									"key": "meetupId",
-									"value": "2"
+									"value": "{{meetupId}}"
 								}
 							]
 						}
@@ -265,16 +260,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/meetup/1/clima",
+									"raw": "http://{{domain}}/api/meetup/{{meetupId}}/clima",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"{{domain}}"
 									],
-									"port": "8081",
 									"path": [
 										"api",
 										"meetup",
-										"1",
+										"{{meetupId}}",
 										"clima"
 									]
 								}
@@ -287,17 +281,16 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/meetup/1/clima?userId=1",
+									"raw": "http://{{domain}}/api/meetup/{{meetupId}}/cervezas?userId=1",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"{{domain}}"
 									],
-									"port": "8081",
 									"path": [
 										"api",
 										"meetup",
-										"1",
-										"clima"
+										"{{meetupId}}",
+										"cervezas"
 									],
 									"query": [
 										{
@@ -334,12 +327,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/meetup",
+							"raw": "http://{{domain}}/api/meetup",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"meetup"
@@ -377,15 +369,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"fechaFin\": \"2020-04-11T03:35:01.603Z\",\r\n  \"fechaInicio\": \"2020-04-11T03:35:01.604Z\"\r\n  \r\n}"
+							"raw": "{\r\n  \"fechaFin\": \"2020-07-05T03:35:01.603Z\",\r\n  \"fechaInicio\": \"2020-07-05T03:35:01.604Z\"\r\n  \r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup?user=1",
+							"raw": "http://{{domain}}/api/meetup?user=1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"meetup"
@@ -428,16 +419,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup/1/users?userId=2",
+							"raw": "http://{{domain}}/api/meetup/{{meetupId}}/users?userId=2",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"meetup",
-								"1",
+								"{{meetupId}}",
 								"users"
 							],
 							"query": [
@@ -479,26 +469,21 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    1,\n    2,\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10,\n    11\n    \n]"
+							"raw": "[\n    1,\n    2,\n    3\n]"
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup/{{meetupId}}/users?userId=1",
+							"raw": "http://{{domain}}/api/meetup/{{meetupId}}/admin/1/users",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"meetup",
 								"{{meetupId}}",
+								"admin",
+								"1",
 								"users"
-							],
-							"query": [
-								{
-									"key": "userId",
-									"value": "1"
-								}
 							]
 						}
 					},
@@ -532,12 +517,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/meetup/1/checkin?userId=1",
+							"raw": "http://{{domain}}/api/meetup/1/checkin?userId=1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{domain}}"
 							],
-							"port": "8081",
 							"path": [
 								"api",
 								"meetup",
@@ -556,6 +540,49 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Weather cast",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "0c7368b075msh9540377125bae93p1fb0f6jsna322ea628c65",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "community-open-weather-map.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://community-open-weather-map.p.rapidapi.com/forecast/daily?cnt=7&q=Buenos Aires",
+					"protocol": "https",
+					"host": [
+						"community-open-weather-map",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"forecast",
+						"daily"
+					],
+					"query": [
+						{
+							"key": "cnt",
+							"value": "7"
+						},
+						{
+							"key": "q",
+							"value": "Buenos Aires"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

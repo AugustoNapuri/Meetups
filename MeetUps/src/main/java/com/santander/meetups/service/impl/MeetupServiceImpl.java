@@ -96,7 +96,7 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
     @Override
-    public Meetup infoCervezas(Meetup meetup, Usuario usuario) {
+    public Meetup infoCervezas(Meetup meetup, Usuario usuario) throws SecurityException{
         if (!usuario.getTipoUsuario().equals(TipoUsuario.ADMIN)) {
             throw new SecurityException("No puede acceder a este recurso");
         }

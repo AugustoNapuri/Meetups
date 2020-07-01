@@ -78,7 +78,11 @@ public class MeetupRestController {
         if (!usuario.isPresent()) {
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(service.infoCervezas(meetup.get(), usuario.get()), HttpStatus.OK);
+        try {
+            return new ResponseEntity(service.infoCervezas(meetup.get(), usuario.get()), HttpStatus.OK);
+        } catch (SecurityException se) {
+            return new ResponseEntity(se.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @PostMapping
