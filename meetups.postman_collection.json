@@ -40,8 +40,7 @@
 							"raw": "{\r\n  \"nombre\": \"augusto\",\r\n  \"tipoUsuario\": \"ADMIN\"\r\n}"
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/usuario",
-							"protocol": "http",
+							"raw": "{{domain}}/api/usuario",
 							"host": [
 								"{{domain}}"
 							],
@@ -85,8 +84,7 @@
 							"raw": "{\r\n\t\"id\": 1,\r\n  \"nombre\": \"invitado2\"\r\n}"
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/usuario",
-							"protocol": "http",
+							"raw": "{{domain}}/api/usuario",
 							"host": [
 								"{{domain}}"
 							],
@@ -119,8 +117,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{domain}}/api/usuario",
-							"protocol": "http",
+							"raw": "{{domain}}/api/usuario",
 							"host": [
 								"{{domain}}"
 							],
@@ -132,8 +129,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Notificacion",
@@ -173,8 +169,7 @@
 							"raw": "{\r\n\t\"id\": 1,\r\n  \"meetup\": {\r\n    \"id\": 1\r\n  },\r\n  \"usuario\": {\r\n        \"id\": 1\r\n    },\r\n  \"mensaje\": \"Nuevo mensaje2\"\r\n}"
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/notificacion",
-							"protocol": "http",
+							"raw": "{{domain}}/api/notificacion",
 							"host": [
 								"{{domain}}"
 							],
@@ -211,8 +206,7 @@
 							"raw": "El evento va a ser en la terraza"
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/notificacion?meetupId={{meetupId}}",
-							"protocol": "http",
+							"raw": "{{domain}}/api/notificacion?meetupId=1",
 							"host": [
 								"{{domain}}"
 							],
@@ -223,15 +217,14 @@
 							"query": [
 								{
 									"key": "meetupId",
-									"value": "{{meetupId}}"
+									"value": "1"
 								}
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Meetup",
@@ -260,8 +253,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{domain}}/api/meetup/{{meetupId}}/clima",
-									"protocol": "http",
+									"raw": "{{domain}}/api/meetup/{{meetupId}}/clima",
 									"host": [
 										"{{domain}}"
 									],
@@ -270,6 +262,13 @@
 										"meetup",
 										"{{meetupId}}",
 										"clima"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -281,8 +280,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{domain}}/api/meetup/{{meetupId}}/cervezas?userId=1",
-									"protocol": "http",
+									"raw": "{{domain}}/api/meetup/{{meetupId}}/cervezas?userId=1",
 									"host": [
 										"{{domain}}"
 									],
@@ -302,9 +300,7 @@
 							},
 							"response": []
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "Get Meetup",
@@ -327,8 +323,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{domain}}/api/meetup",
-							"protocol": "http",
+							"raw": "{{domain}}/api/meetup",
 							"host": [
 								"{{domain}}"
 							],
@@ -372,8 +367,7 @@
 							"raw": "{\r\n  \"fechaFin\": \"2020-07-05T03:35:01.603Z\",\r\n  \"fechaInicio\": \"2020-07-05T03:35:01.604Z\"\r\n  \r\n}"
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/meetup?user=1",
-							"protocol": "http",
+							"raw": "{{domain}}/api/meetup?user=1",
 							"host": [
 								"{{domain}}"
 							],
@@ -413,14 +407,10 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {}
-							}
+							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/meetup/{{meetupId}}/users?userId=2",
-							"protocol": "http",
+							"raw": "{{domain}}/api/meetup/{{meetupId}}/users?userId=2",
 							"host": [
 								"{{domain}}"
 							],
@@ -472,8 +462,7 @@
 							"raw": "[\n    1,\n    2,\n    3\n]"
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/meetup/{{meetupId}}/admin/1/users",
-							"protocol": "http",
+							"raw": "{{domain}}/api/meetup/{{meetupId}}/admin/1/users",
 							"host": [
 								"{{domain}}"
 							],
@@ -511,14 +500,10 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {}
-							}
+							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{domain}}/api/meetup/1/checkin?userId=1",
-							"protocol": "http",
+							"raw": "{{domain}}/api/meetup/1/checkin?userId=2",
 							"host": [
 								"{{domain}}"
 							],
@@ -531,15 +516,14 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Weather cast",
@@ -584,6 +568,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
