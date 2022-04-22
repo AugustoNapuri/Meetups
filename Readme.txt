@@ -1,11 +1,12 @@
 Aplicativo Meetups
 
-Datos a tener en cuenta:
+-Ver modelo de entrada y salida de datos mediante Swagger en
 
--Ver diagrama de base de datos.
+    Local: http://localhost:8080/swagger-ui.html
+    Servidor: https://meetups-rio.herokuapp.com/swagger-ui.html
+
 -Usar la coleccion de Postman para probar el funcionamiento de las APIS
--Ver modelo de entrada y salida de datos mediante Swagger en 
-    http://localhost:8081/swagger-ui.html
+-Ver diagrama de base de datos database_diagram.png.
 
 Herramientas necesarias para ejecucion:
 
